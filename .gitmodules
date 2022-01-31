@@ -1,0 +1,3 @@
+[submodule "px4"]
+	path = px4
+	url = git@github.com:ceballos-alberto/PX4-Autopilot.git
