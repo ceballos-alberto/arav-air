@@ -3,3 +3,5 @@ devel/
 px4pub
 .catkin_workspace
 src/CMakeLists.txt
+EPMnode
+variables.data-00000-of-00001
