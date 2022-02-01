@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<!-- ############################################################################
+     ################ Environment Perception Module (EPM) - ARAV ################
+     ############################################################################
+     #################### Author : Alberto Ceballos Gonzalez ####################
+     ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
+     ######### (c) Copyright 2022. Alberto Ceballos. All Rights Reserved ########
+     ############################################################################ -->
+
+<launch>
+
+	<!-- Parameters -->
+
+	<arg name="EPM-DIR" default="$(find perception)"/>
+
+	<arg name="display_rectification" default="false"/>
+	<arg name="display_depthMap" default="false"/>
+	<arg name="display_detection" default="false"/>
+	<arg name="display_depthFilter" default="false"/>
+
+	<arg name="save_rectification" default="false"/>
+	<arg name="save_depthMap" default="false"/>
+	<arg name="save_detection" default="false"/>
+	<arg name="save_depthFilter" default="false"/>
+	<arg name="save_cloud" default="false"/>
+
+	<arg name="updateRate_network" default="0.4"/>
+	<arg name="updateRate_epm" default="0.4"/>
+
+	<arg name="robotName" default="arav"/>
+
+	<!-- ARAV Environment Perception nodes -->
+
+	<group ns="$(arg robotName)">
+
+		<node name="detection_network" pkg="perception" type="AI-Filter.py" output="screen"
+		args="$(arg EPM-DIR) $(arg display_detection) $(arg save_detection) $(arg updateRate_network)"/>
+
+		<node name="perception_node" pkg="perception" type="EPMnode" output="screen"
+		args="$(arg EPM-DIR) $(arg display_rectification) $(arg display_depthMap) $(arg display_depthFilter)
+		$(arg save_rectification) $(arg save_depthMap) $(arg save_depthFilter) $(arg save_cloud) $(arg updateRate_epm)"/>
+
+	</group>
+
+</launch>
+
+<!-- ############################################################################
+     ################ Environment Perception Module (EPM) - ARAV ################
+     ############################################################################
+     #################### Author : Alberto Ceballos Gonzalez ####################
+     ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
+     ######### (c) Copyright 2022. Alberto Ceballos. All Rights Reserved ########
+     ############################################################################ -->
