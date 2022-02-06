@@ -1,5 +1,33 @@
 <?xml version = "1.0"?>
+
+<!-- ############################################################################
+     #################### Flight Control Module (FCM) - ARAV ####################
+     ############################################################################
+     #################### Author : Alberto Ceballos Gonzalez ####################
+     ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
+     ######### (c) Copyright 2022. Alberto Ceballos. All Rights Reserved ########
+     ############################################################################ -->
+
 <launch>
+
+    <!-- Parameters -->
+
+    <arg name = "margin" default = "0.2"/>
+    <arg name = "updateRate" default = "20.0"/>
+    <arg name = "level" default = "1.5"/>
+
+    <!-- Launch simulation -->
+
     <include file = "$(find px4)/launch/mavros_posix_sitl.launch"/>
-    <node name = "px4pub" pkg = "control" type = "px4pub" output = "screen"/>
+    <node name = "aircontrol" pkg = "control" type = "px4pub" output = "screen" required = "true"
+    args = "$(arg margin) $(arg updateRate) $(arg level)"/>
+
 </launch>
+
+<!-- ############################################################################
+     #################### Flight Control Module (FCM) - ARAV ####################
+     ############################################################################
+     #################### Author : Alberto Ceballos Gonzalez ####################
+     ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
+     ######### (c) Copyright 2022. Alberto Ceballos. All Rights Reserved ########
+     ############################################################################ -->
