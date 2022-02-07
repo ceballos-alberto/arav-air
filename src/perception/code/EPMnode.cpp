@@ -42,8 +42,8 @@ using namespace tf;
 
 /* ---------- INPUTS ---------- */
 
-static const std::string INPUT_TOPIC_RIGHT = "/arav/sensors/frontRightCamera/image";
-static const std::string INPUT_TOPIC_LEFT = "/arav/sensors/frontLeftCamera/image";
+static const std::string INPUT_TOPIC_RIGHT = "/sensors/cam_2_link/image";
+static const std::string INPUT_TOPIC_LEFT = "/sensors/cam_1_link/image";
 static const std::string INPUT_FROM_FILTER = "/arav/EPM/AIFilterOutput";
 static const std::string STAT_TOPIC_IN = "/arav/EPM/AIFilterStatus";
 
@@ -481,7 +481,7 @@ class DepthMap {
 
 		}
 
-		void toPointCloud (bool save, std::string SAVE_PATH, clock_t init_time, std::vector <float> position) {
+		void toPointCloud (bool save, std::string SAVE_PATH, clock_t init_time) {
 
 			/* Parameters */
 
@@ -516,10 +516,6 @@ class DepthMap {
 		        	pclPoint.z = opencvPoint.y;
 
 		        	/* Reference Output Cloud to a fixed frame --> odom */
-
-		        	pclPoint.x = pclPoint.x + position [0];
-
-		        	pclPoint.y = pclPoint.y + position [1] - pclPoint.x * tan(position[2]);
 
 		        	pclPoint.z = pclPoint.z + zOffset;
 
@@ -1038,56 +1034,13 @@ int main (int argc, char** argv) {
 			
 			pub_filter.publish(depthMap.getMsgForVisual2());
 
-			/* Obtain latest TF data available */
-
-			tf::StampedTransform transformTF;
-
-			listenerTF.lookupTransform ("/base_link", "/odom", ros::Time(0), transformTF);
-
-			/* Convert from quaternions to euler angles --> yaw */
-
-			xAngle = transformTF.getRotation().getX();
-			yAngle = transformTF.getRotation().getY();
-			zAngle = transformTF.getRotation().getZ();
-			wAngle = transformTF.getRotation().getW();
-
-			yawAngle = std::atan2 ((2*(wAngle*zAngle+xAngle*yAngle)),(1-2*(yAngle*yAngle+zAngle*zAngle)));
-
-			/* Angle criteria --> start from 0 rad & clockwise positive */
-
-			if (yawAngle > 0) {
-
-				yawAngle = yawAngle - PI;
-
-			}
-
-			else {
-
-				yawAngle = yawAngle + PI;
-
-			}
-
-			/* Rotate X and Y using the yaw angle */
-
-			xPosition = transformTF.getOrigin().getX()*cos(-yawAngle) - transformTF.getOrigin().getY()*sin(-yawAngle);
-			yPosition = transformTF.getOrigin().getX()*sin(-yawAngle) + transformTF.getOrigin().getY()*cos(-yawAngle);
-
-			position[0] = xPosition;
-			position[1] = yPosition;
-			position[2] = yawAngle;
-
 			/* Convert to Point Cloud */
 
-			depthMap.toPointCloud (save_4, SAVE_4_PATH, init_time, position);
+			depthMap.toPointCloud (save_4, SAVE_4_PATH, init_time);
 
-			/* Compute ultrasonic Point Cloud */
-
-			mode_msg.data = depthMap.computeUltPointCloud (position, ultrasonic_front, ultrasonic_right, ultrasonic_left);
-
-			/* Publish Point Clouds */
+			/* Publish Point Cloud */
 
 			pub_cloud.publish (depthMap.getOutputCloud());
-			pub_cloud_ult.publish (depthMap.getOutputCloudUlt());
 
 			/* Publich mode info */
 

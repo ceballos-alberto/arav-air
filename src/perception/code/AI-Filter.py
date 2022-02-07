@@ -181,7 +181,7 @@ while not rospy.is_shutdown():
 
 	nbCorrectResults = np.argwhere(results['detection_scores'].numpy()[0] > THRESHOLD).shape[0]
 
-	for i in range (1):	# Change by nbCorrectResults if more than one #
+	for i in range (3):	# Change by nbCorrectResults if more than one #
 
 		BoundingBoxes.append(int(results['detection_boxes'][0][i][0]*HEIGHT))	# Bounding Box Y min #
 		BoundingBoxes.append(int(results['detection_boxes'][0][i][1]*WIDTH))		# Bounding Box X min #
@@ -213,7 +213,9 @@ while not rospy.is_shutdown():
 		
 	# Publish image #
 	
-	cv2.rectangle (frame, (BoundingBoxes[1+4*i]-5,BoundingBoxes[2+4*i]+5), (BoundingBoxes[3+4*i]+5,BoundingBoxes[0+4*i]-5), (77, 163, 232), 3)
+	for i in range (3):	# Change by nbCorrectResults if more than one #
+
+			cv2.rectangle (frame, (BoundingBoxes[1+4*i]-5,BoundingBoxes[2+4*i]+5), (BoundingBoxes[3+4*i]+5,BoundingBoxes[0+4*i]-5), (77, 163, 232), 3)
 	visual_msg = pub_bridge.cv2_to_imgmsg (frame, "bgr8")
 	pub_visual.publish(visual_msg)
 
@@ -221,7 +223,7 @@ while not rospy.is_shutdown():
 
 	if display:
 
-		for i in range (1):	# Change by nbCorrectResults if more than one #
+		for i in range (3):	# Change by nbCorrectResults if more than one #
 
 			cv2.rectangle (frame, (BoundingBoxes[1+4*i]-5,BoundingBoxes[2+4*i]+5), (BoundingBoxes[3+4*i]+5,BoundingBoxes[0+4*i]-5), (77, 163, 232), 3)
 

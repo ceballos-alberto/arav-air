@@ -20,6 +20,7 @@
 
     <include file = "$(find px4)/launch/mavros_posix_sitl.launch"/>
     <include file = "$(find simulation)/launch/launch.xml"/>
+    <include file = "$(find perception)/launch/launch.xml"/>
     
     <node name = "aircontrol" pkg = "control" type = "px4pub" output = "screen" required = "true"
     args = "$(arg margin) $(arg updateRate) $(arg level)"/>
