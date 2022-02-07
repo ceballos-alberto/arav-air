@@ -25,6 +25,11 @@
 		output = "screen" args = "$(arg directory) $(arg save) $(arg updateRate)"/>
 
 	</group>
+	
+	<!-- Launch Rviz tool -->
+	
+	<node name = "rviz" pkg = "rviz" type = "rviz" args = "-d $(find simulation)/rviz/config.rviz"
+	launch-prefix="bash -c 'sleep 20; $0 $@' "/>
 
 </launch>
 
