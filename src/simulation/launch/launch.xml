@@ -1,7 +1,7 @@
 <?xml version = "1.0"?>
 
 <!-- ############################################################################
-     #################### Flight Control Module (FCM) - ARAV ####################
+     ###################### Gazebo Client - ARAV Simulator ######################
      ############################################################################
      #################### Author : Alberto Ceballos Gonzalez ####################
      ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
@@ -10,24 +10,26 @@
 
 <launch>
 
-    <!-- Parameters -->
+	<!-- Parameters -->
 
-    <arg name = "margin" default = "0.2"/>
-    <arg name = "updateRate" default = "20.0"/>
-    <arg name = "level" default = "1.5"/>
+	<arg name = "directory" default = "$(find simulation)"/>
+	<arg name = "robotName" default = "arav"/>
+	<arg name = "save" default = "false"/>
+	<arg name = "updateRate" default = "15"/>
 
-    <!-- Launch simulation -->
+	<!-- ARAV Gazebo client node -->
 
-    <include file = "$(find px4)/launch/mavros_posix_sitl.launch"/>
-    <include file = "$(find simulation)/launch/launch.xml"/>
-    
-    <node name = "aircontrol" pkg = "control" type = "px4pub" output = "screen" required = "true"
-    args = "$(arg margin) $(arg updateRate) $(arg level)"/>
+	<group ns = "$(arg robotName)">
+
+		<node name = "visualizer" pkg = "simulation" type = "client.py"
+		output = "screen" args = "$(arg directory) $(arg save) $(arg updateRate)"/>
+
+	</group>
 
 </launch>
 
 <!-- ############################################################################
-     #################### Flight Control Module (FCM) - ARAV ####################
+     ###################### Gazebo Client - ARAV Simulator ######################
      ############################################################################
      #################### Author : Alberto Ceballos Gonzalez ####################
      ######## E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr ########
