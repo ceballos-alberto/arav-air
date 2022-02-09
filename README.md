@@ -29,7 +29,7 @@ This process may take a long time too. When the PX4 Autopilot firmware is compil
 
 `param set COM_RCL_EXCEPT 4`
 
-Then close Gazebo using the Ctrl-C command
+Then close Gazebo using the Ctrl-C command.
 
 ## Download object detection model and weights
 
@@ -53,7 +53,7 @@ Go back to the project base directory and move the models to the Gazebo default 
 
 ## Launch a demo of the project
 
-Close current command line window and open a new one in the base directory, the execute the demo:
+Close current command line window and open a new one in the base directory, then execute the demo:
 
 `cd arav_air`
 
