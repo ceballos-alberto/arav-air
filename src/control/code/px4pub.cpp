@@ -56,6 +56,7 @@ void state_callback (const mavros_msgs::State::ConstPtr& msg) {
 
 void waypoint_callback (const std_msgs::Float64MultiArray::ConstPtr& msg) {
   std::vector<double> waypoint = msg -> data;
+  waypoint[0] = -waypoint[0];
   waypointList.push_back (waypoint);
 }
 
@@ -312,7 +313,7 @@ int main(int argc, char **argv) {
 
   /* Send a few setpoints after finishing */
 
-  for (int i = 100; ros::ok() && i > 0; --i) {
+  for (int i = 200; ros::ok() && i > 0; --i) {
     cmd_pub.publish(command);
     ros::spinOnce();
     rate.sleep();

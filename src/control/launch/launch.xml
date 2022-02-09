@@ -12,7 +12,7 @@
 
     <!-- Parameters -->
 
-    <arg name = "margin" default = "0.2"/>
+    <arg name = "margin" default = "0.3"/>
     <arg name = "updateRate" default = "20.0"/>
     <arg name = "level" default = "1.5"/>
 
@@ -21,6 +21,9 @@
     <include file = "$(find px4)/launch/mavros_posix_sitl.launch"/>
     <include file = "$(find simulation)/launch/launch.xml"/>
     <include file = "$(find perception)/launch/launch.xml"/>
+    <include file="$(find octomap_server)/launch/launch.xml"/>
+    <include file="$(find path_planning)/launch/launch.xml"/>
+    <include file="$(find path_selector)/launch/launch.xml"/>
     
     <node name = "aircontrol" pkg = "control" type = "px4pub" output = "screen" required = "true"
     args = "$(arg margin) $(arg updateRate) $(arg level)"/>
