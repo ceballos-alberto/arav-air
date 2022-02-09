@@ -10,26 +10,20 @@
 
 <launch>
 
-	<!-- Parameters -->
+	<!-- Launch RVIZ visualization tool -->
+	<include file = "$(find simulation)/rviz/rviz.launch"/>
 
+	<!-- Parameters -->
 	<arg name = "directory" default = "$(find simulation)"/>
 	<arg name = "robotName" default = "arav"/>
 	<arg name = "save" default = "false"/>
 	<arg name = "updateRate" default = "15"/>
 
-	<!-- ARAV Gazebo client node -->
-
+	<!-- Launch ARAV Gazebo client node -->
 	<group ns = "$(arg robotName)">
-
 		<node name = "visualizer" pkg = "simulation" type = "client.py"
 		output = "screen" args = "$(arg directory) $(arg save) $(arg updateRate)"/>
-
 	</group>
-	
-	<!-- Launch Rviz tool -->
-	
-	<node name = "rviz" pkg = "rviz" type = "rviz" args = "-d $(find simulation)/rviz/config.rviz"
-	launch-prefix="bash -c 'sleep 20; $0 $@' "/>
 
 </launch>
 

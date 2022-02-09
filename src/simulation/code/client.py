@@ -86,11 +86,11 @@ class Listener:
 		self.status = 0
 
 	# Class methods #
-	
+
 	def statusCallback (self, msg):
-	
+
 		# To be executed when an status message is received #
-		
+
 		self.status = msg.data
 
 	def imageCallback (self, msg):
@@ -104,7 +104,7 @@ class Listener:
 		except CvBridgeError as e:
 
 			print ("[Client] Error while loading frame")
-			
+
 	def detectionCallback (self, msg):
 
 		# To be executed when an image is received #
@@ -116,7 +116,7 @@ class Listener:
 		except CvBridgeError as e:
 
 			print ("[Client] Error while loading frame")
-			
+
 	def depthCallback (self, msg):
 
 		# To be executed when an image is received #
@@ -128,7 +128,7 @@ class Listener:
 		except CvBridgeError as e:
 
 			print ("[Client] Error while loading frame")
-			
+
 	def cloudCallback (self, msg):
 
 		# To be executed when an image is received #
@@ -181,7 +181,7 @@ while not rospy.is_shutdown():
     	# Display #
     	cv2.imshow("ARAV Simulator", frame)
     	cv2.waitKey(1)
-    
+
     else:
     	# Display #
     	cv2.imshow("ARAV Simulator", compound)
@@ -204,4 +204,3 @@ cv2.destroyAllWindows()
     -------- E-mail : alberto.ceballos-gonzalez@student.isae-supaero.fr --------
     ---------- (c) Copyright 2022 Alberto Ceballos All Rights Reserved ---------
     ---------------------------------------------------------------------------- """
-    
