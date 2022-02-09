@@ -182,9 +182,9 @@ class DepthMap {
 		std::vector < std::vector<int> > pointCoord;
 
 		sensor_msgs::ImagePtr msgForFilter;
-		
+
 		sensor_msgs::ImagePtr msgForVisual1;
-		
+
 		sensor_msgs::ImagePtr msgForVisual2;
 
 	public:	/* Class Methods */
@@ -212,10 +212,10 @@ class DepthMap {
 			/* Point Cloud Parameters */
 
 			pclPointCloud.height = 1;			/* This line can be modified */
-        		pclPointCloud.header.frame_id = "odom";	/* This line can be modified */
+        		pclPointCloud.header.frame_id = "map";	/* This line can be modified */
 
         		ultPointCloud.height = 1;			/* This line can be modified */
-        		ultPointCloud.header.frame_id = "odom";	/* This line can be modified */
+        		ultPointCloud.header.frame_id = "map";	/* This line can be modified */
 
 			/* Agorithm Configuration */
 
@@ -363,7 +363,7 @@ class DepthMap {
         			cv::imwrite (SAVE_PATH + "depthMap_" + std::to_string((clock()-init_time)/CLOCKS_PER_SEC).substr(0,4) + "_segs.png", depthMap_color);
 
         		}
-        		
+
         		msgForVisual1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", depthMap_color).toImageMsg();
 
 		}
@@ -476,7 +476,7 @@ class DepthMap {
         			cv::imwrite (SAVE_PATH + "depthFilter_" + std::to_string((clock()-init_time)/CLOCKS_PER_SEC).substr(0,4) + "_segs.png", depthMap_color);
 
         		}
-        		
+
         		msgForVisual2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", depthMap_color).toImageMsg();
 
 		}
@@ -717,13 +717,13 @@ class DepthMap {
 			return msgForFilter;
 
 		}
-		
+
 		sensor_msgs::ImagePtr getMsgForVisual1 () {
 
 			return msgForVisual1;
 
 		}
-		
+
 		sensor_msgs::ImagePtr getMsgForVisual2 () {
 
 			return msgForVisual2;
@@ -1021,7 +1021,7 @@ int main (int argc, char** argv) {
 			/* Compute Depth Map */
 
 			depthMap.compute (display_2, save_2, SAVE_2_PATH, init_time);
-			
+
 			pub_depth.publish (depthMap.getMsgForVisual1());
 
 			/* Receive information from the AI filter */
@@ -1031,7 +1031,7 @@ int main (int argc, char** argv) {
 			/* AI - Filtering */
 
 			depthMap.postFiltering (boundingBoxes, display_3, save_3, SAVE_3_PATH, init_time);
-			
+
 			pub_filter.publish(depthMap.getMsgForVisual2());
 
 			/* Convert to Point Cloud */
