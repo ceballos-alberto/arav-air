@@ -147,7 +147,7 @@ int main(int argc, char **argv) {
   /* Publishers, Subscribers & Services */
 
   ros::Subscriber state_sub = nh.subscribe <mavros_msgs::State> (STATE_TOPIC, 10, state_callback);
-  ros::Subscriber waypoint_sub = nh.subscribe <std_msgs::Float64MultiArray> (WAYPOINT_TOPIC, 10, waypoint_callback);
+  ros::Subscriber waypoint_sub = nh.subscribe <std_msgs::Float64MultiArray> (WAYPOINT_TOPIC, 100, waypoint_callback);
   ros::Subscriber active_sub = nh.subscribe <std_msgs::Bool> (ACTIVE_TOPIC, 10, activation_callback);
   ros::Subscriber pose_sub = nh.subscribe <geometry_msgs::PoseStamped> (POSE_TOPIC, 10, position_callback);
   ros::Publisher cmd_pub = nh.advertise <geometry_msgs::PoseStamped> (CMD_TOPIC, 10);
